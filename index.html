@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Ferramentas Rocket for Eat | Gestão Inteligente de Delivery</title>
-    <meta name="description" content="Ferramentas gratuitas para donos de delivery: Precificação correta, Cálculo de taxa de entrega e Gerador de descrições com IA.">
+    <title>Calculadora de Preço iFood (Balcão x Delivery) | Rocket for Eat</title>
+    <meta name="description" content="Converta seu preço de balcão para o preço correto no iFood. Não perca margem com as taxas. Ferramenta gratuita Rocket for Eat.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,45 +69,40 @@
         .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #ccc; }
         .form-control, .form-select {
             width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid #444; border-radius: 8px;
-            color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
+            color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s;
         }
         .form-control:focus { border-color: var(--primary); }
 
         /* --- RESULTADOS --- */
         .result-box {
-            background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-top: 20px;
+            background: rgba(0,0,0,0.3); padding: 25px; border-radius: 8px; margin-top: 20px;
             display: none; border: 1px solid #333; animation: fadeIn 0.5s;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; text-align: center; }
-        .comp-card { padding: 15px; border-radius: 8px; background: #252525; border: 1px solid #444; }
+        .big-result { text-align: center; margin-bottom: 20px; }
+        .big-result span { display: block; }
+        .result-label { font-size: 0.9rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+        .result-value { font-size: 2.8rem; font-weight: 900; color: var(--primary); line-height: 1.1; margin-top: 10px; }
         
-        /* Cores Dinâmicas */
-        .status-good { color: var(--green); border-color: var(--green); background: rgba(34, 197, 94, 0.1); }
-        .status-bad { color: var(--red); border-color: var(--red); background: rgba(239, 68, 68, 0.1); }
-        .status-neutral { color: var(--primary); border-color: var(--primary); background: rgba(255, 201, 0, 0.1); }
-
-        .comp-label { display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; color: #aaa; }
-        .comp-value { font-size: 1.4rem; font-weight: 800; display: block; }
-
-        .breakdown { font-size: 0.9rem; color: #ccc; border-top: 1px solid #444; padding-top: 15px; }
-        .breakdown-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .math-explainer {
+            background: #252525; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #ccc; margin-top: 20px; border-left: 4px solid var(--primary);
+        }
 
         /* --- BOTÕES --- */
-        .btn-calc, .btn-generate {
-            width: 100%; padding: 15px; border: none; border-radius: 8px;
-            background: var(--primary); color: #000; font-weight: 800; font-size: 1rem;
+        .btn-calc {
+            width: 100%; padding: 18px; border: none; border-radius: 8px;
+            background: var(--primary); color: #000; font-weight: 800; font-size: 1.1rem;
             cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
-        .btn-calc:hover, .btn-generate:hover { background: #fff; transform: scale(1.02); }
-        .btn-copy { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; float: right; }
+        .btn-calc:hover { background: #fff; transform: scale(1.02); }
 
         /* --- SOBRE A ROCKET --- */
         .about-section { padding: 80px 20px; background-color: #0d0d0d; border-top: 1px solid #333; margin-top: 60px; }
         .about-intro { text-align: center; max-width: 700px; margin: 0 auto 50px auto; }
         .about-intro h2 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
         .about-intro span { color: var(--primary); }
+        .about-intro p { font-size: 1rem; color: #999; line-height: 1.6; margin-bottom: 20px; }
         
         .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
         .pillar-card { background: #1a1a1a; padding: 25px; border-radius: 8px; border-bottom: 4px solid #333; transition: 0.3s; }
@@ -147,8 +142,8 @@
 
     <div class="hero">
         <div class="container">
-            <h1>PARE DE <span style="color: var(--primary)">CHUTAR PREÇO</span> NO IFOOD</h1>
-            <p>Descubra a saúde financeira do seu cardápio e use IA para vender mais.</p>
+            <h1>CONVERSOR DE PREÇO: <br><span style="color: var(--primary)">BALCÃO ➜ IFOOD</span></h1>
+            <p>Descubra o valor exato que você precisa cobrar no app para receber o mesmo que recebe no balcão.</p>
         </div>
     </div>
 
@@ -156,146 +151,57 @@
         
         <div class="tool-section">
             <div class="tool-title">
-                <span class="tool-icon">💰</span>
-                <h3>Auditoria de Preço (Você vs. Ideal)</h3>
+                <span class="tool-icon">🔄</span>
+                <h3>Calculadora de Repasse de Taxa</h3>
             </div>
             
-            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">
-                Coloque seus dados e veja se sua precificação está gerando lucro real ou prejuízo.
-            </p>
-
             <div class="form-group">
-                <label class="form-label">Por quanto você vende hoje? (R$)</label>
-                <input type="number" id="currentPrice" class="form-control" placeholder="Ex: 45.00">
+                <label class="form-label">Por quanto você vende no BALCÃO? (R$)</label>
+                <input type="number" id="balconyPrice" class="form-control" placeholder="Ex: 45.00">
             </div>
 
             <div class="form-group">
-                <label class="form-label">Qual seu Custo Total? (CMV + Embalagem)</label>
-                <input type="number" id="costPrice" class="form-control" placeholder="Ex: 12.00">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Taxa da Plataforma</label>
+                <label class="form-label">Qual a Taxa do App? (%)</label>
                 <select id="platformFee" class="form-select">
                     <option value="0.12">iFood Básico (12%)</option>
                     <option value="0.23">iFood Entrega (23%)</option>
-                    <option value="0.27">iFood Entrega + Taxas (27%)</option>
+                    <option value="0.27" selected>iFood Entrega + Taxas (27%)</option>
                     <option value="0.18">99Food (Média 18%)</option>
+                    <option value="custom">Outra (Digitar)</option>
                 </select>
+                <input type="number" id="customFee" class="form-control" placeholder="Digite a taxa (ex: 20)" style="display: none; margin-top: 10px;">
             </div>
 
-            <button class="btn-calc" onclick="calculatePricing()">AUDITAR MEU PREÇO</button>
+            <button class="btn-calc" onclick="calculateMarketplacePrice()">CALCULAR PREÇO DO APP</button>
 
-            <div id="pricingResult" class="result-box">
-                <div class="comparison-grid">
-                    <div id="cardCurrent" class="comp-card">
-                        <span class="comp-label">Sua Margem Real</span>
-                        <span id="currentMarginDisplay" class="comp-value">0%</span>
-                        <small id="currentProfitDisplay" style="display:block; margin-top:5px; color: #ccc;">Lucro: R$ 0,00</small>
-                    </div>
-                    <div class="comp-card" style="border: 1px dashed #666;">
-                        <span class="comp-label">Meta Saudável (15%)</span>
-                        <span id="idealPriceDisplay" class="comp-value" style="color: #fff">R$ 0,00</span>
-                        <small style="color: #aaa; display:block; margin-top:5px;">Preço Mínimo Sugerido</small>
-                    </div>
+            <div id="resultBox" class="result-box">
+                <div class="big-result">
+                    <span class="result-label">Para receber seus R$ <span id="targetVal">0,00</span>, venda por:</span>
+                    <span id="finalPrice" class="result-value">R$ 0,00</span>
                 </div>
 
-                <div class="breakdown">
-                    <p id="analysisMsg" style="text-align: center; margin-bottom: 15px; color: #fff; font-weight: bold; font-size: 1.1rem;">
+                <div class="math-explainer">
+                    <p style="margin-bottom: 10px;"><strong>Entenda a conta (Prova Real):</strong></p>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>Venda no App:</span>
+                        <span id="proofSell" style="color: #fff; font-weight: bold;">R$ 0,00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>iFood desconto (<span id="feePercentDisplay">27%</span>):</span>
+                        <span id="proofFee" style="color: var(--red)">- R$ 0,00</span>
+                    </div>
+                    <div style="border-top: 1px solid #555; padding-top: 5px; display: flex; justify-content: space-between;">
+                        <span>Sobra para você:</span>
+                        <span id="proofNet" style="color: var(--green); font-weight: bold;">R$ 0,00</span>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">
+                        *Muitos erram ao somar 27% sobre os 45 reais (R$ 57,15). Se vender por 57,15, o iFood desconta a taxa e sobra só R$ 41,71. Você perde dinheiro. Nossa calculadora usa o Markup correto.
                     </p>
-                    <hr style="border-color: #444;">
-                    <div class="breakdown-row"><span>Custo Prod.:</span> <span id="resCost">R$ 0,00</span></div>
-                    <div class="breakdown-row"><span>Taxa App (No seu preço):</span> <span id="resFee">R$ 0,00</span></div>
-                    <div class="breakdown-row"><span>Imposto (4%):</span> <span id="resTax">R$ 0,00</span></div>
                 </div>
 
-                <a href="https://wa.me/5511959228663?text=Fiz%20o%20c%C3%A1lculo%20e%20quero%20uma%20an%C3%A1lise%20completa." style="display: block; text-align: center; color: var(--primary); margin-top: 20px; font-weight: 700; text-decoration: none; border: 1px solid var(--primary); padding: 10px; border-radius: 5px;">
-                    QUERO UMA ANÁLISE COMPLETA
+                <a href="https://wa.me/5511959228663?text=Fiz%20a%20conta%20e%20vi%20que%20meu%20card%C3%A1pio%20t%C3%A1%20errado.%20Preciso%20de%20ajuda." style="display: block; text-align: center; color: var(--primary); margin-top: 20px; font-weight: 700; text-decoration: none; border: 1px solid var(--primary); padding: 15px; border-radius: 5px;">
+                    PRECISO AJUSTAR MEU CARDÁPIO NO IFOOD
                 </a>
-            </div>
-        </div>
-
-        <div class="tool-section">
-            <div class="tool-title">
-                <span class="tool-icon">🛵</span>
-                <h3>O "Rombo" da Entrega Própria</h3>
-            </div>
-            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">
-                Para quem usa <strong>Entrega Própria (Marketplace)</strong>: Descubra se o repasse está cobrindo o motoboy ou saindo do seu lucro.
-            </p>
-
-            <div class="form-group">
-                <label class="form-label">Quanto você COBRA do cliente? (R$)</label>
-                <input type="number" id="clientDeliveryFee" class="form-control" placeholder="Ex: 8.00">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Quanto você PAGA ao motoboy? (R$)</label>
-                <input type="number" id="motoboyCost" class="form-control" placeholder="Ex: 8.00">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Sua Comissão no iFood (Plano Básico)</label>
-                <select id="deliveryPlanFee" class="form-select">
-                    <option value="0.12">12% (Padrão)</option>
-                    <option value="0.15">15% (Alguns contratos)</option>
-                </select>
-            </div>
-
-            <button class="btn-calc" onclick="calculateDeliveryLoss()">CALCULAR PREJUÍZO DE REPASSE</button>
-
-            <div id="deliveryResult" class="result-box">
-                <div style="text-align: center;">
-                    <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 15px;">
-                        O iFood cobra comissão sobre a taxa de entrega também!
-                    </p>
-                    
-                    <div style="background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <div class="breakdown-row"><span>Cliente pagou:</span> <span style="color: var(--green)">+ R$ <span id="valClient">0.00</span></span></div>
-                        <div class="breakdown-row"><span>iFood descontou:</span> <span style="color: var(--red)">- R$ <span id="valIfood">0.00</span></span></div>
-                        <div class="breakdown-row"><span>Motoboy recebeu:</span> <span style="color: var(--red)">- R$ <span id="valMoto">0.00</span></span></div>
-                    </div>
-
-                    <span style="font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 5px; color: #fff;">RESULTADO FINAL:</span>
-                    <span id="deliveryLoss" style="font-size: 2rem; font-weight: 900;">R$ 0,00</span>
-                    
-                    <p id="deliveryMsg" style="margin-top: 10px; font-size: 0.9rem; color: #ccc;"></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="tool-section">
-            <div class="tool-title">
-                <span class="tool-icon">🤖</span>
-                <h3>Gerador de Descrição (IA)</h3>
-            </div>
-            <p style="font-size: 0.9rem; color: #ccc; margin-bottom: 20px;">
-                Crie descrições de neuromarketing para o seu prato em segundos.
-            </p>
-
-            <div class="form-group">
-                <label class="form-label">Ingredientes do Prato</label>
-                <input type="text" id="dishInput" class="form-control" placeholder="Ex: Pizza Calabresa com cebola e catupiry">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Estilo</label>
-                <select id="toneInput" class="form-select">
-                    <option value="vendedor">Vendedor (Fome)</option>
-                    <option value="gourmet">Gourmet (Chique)</option>
-                    <option value="divertido">Divertido</option>
-                </select>
-            </div>
-
-            <button class="btn-generate" onclick="generateDescription()">GERAR DESCRIÇÃO ✨</button>
-            <div id="loading" style="display:none; text-align:center; margin-top:15px; color:var(--primary);">
-                A IA está pensando... aguarde.
-            </div>
-
-            <div id="aiResult" class="result-box" style="display: none;">
-                <button class="btn-copy" onclick="copyText()">Copiar</button>
-                <p id="ai-output" style="white-space: pre-line; margin-top: 10px; color: #ddd; font-style: italic;"></p>
-                <p id="ai-error" style="color: var(--red); display:none; font-size:0.9rem; margin-top:10px; border: 1px solid var(--red); padding: 10px; border-radius: 5px;"></p>
             </div>
         </div>
 
@@ -344,164 +250,52 @@
     </a>
 
     <script>
-        // ==========================================
-        // API KEY (ROCKET FOR EAT)
-        // ==========================================
-        const API_KEY = 'AIzaSyDSTxEtN5ghgF_yqo3ysszgiljeFwqt4dE'; 
+        // --- GERENCIAR INPUT DE TAXA CUSTOM ---
+        const platformSelect = document.getElementById('platformFee');
+        const customInput = document.getElementById('customFee');
 
-        // --- 1. PRECIFICAÇÃO (COMPARATIVO INTELIGENTE) ---
-        function calculatePricing() {
-            const currentPrice = parseFloat(document.getElementById('currentPrice').value);
-            const cost = parseFloat(document.getElementById('costPrice').value);
-            const feePercent = parseFloat(document.getElementById('platformFee').value);
-            const tax = 0.04; // 4% Fixo Simples
-            const desiredMargin = 0.15; // Meta de 15%
-
-            if (!currentPrice || !cost) { alert("Preencha o Preço Atual e o Custo."); return; }
-
-            // 1. Calcular Situação Atual
-            const currentFeeVal = currentPrice * feePercent;
-            const currentTaxVal = currentPrice * tax;
-            const currentNet = currentPrice - currentFeeVal - currentTaxVal - cost;
-            const currentMarginPercent = (currentNet / currentPrice) * 100;
-
-            // 2. Calcular Preço Ideal (Markup para 15%)
-            const totalDeductions = feePercent + desiredMargin + tax;
-            const idealPrice = cost / (1 - totalDeductions);
-
-            // EXIBIÇÃO VISUAL (Card 1: Realidade)
-            const marginEl = document.getElementById('currentMarginDisplay');
-            const profitEl = document.getElementById('currentProfitDisplay');
-            const cardCurrent = document.getElementById('cardCurrent');
-            const analysisMsg = document.getElementById('analysisMsg');
-
-            marginEl.innerText = `${currentMarginPercent.toFixed(1)}%`;
-            profitEl.innerText = `Lucro: R$ ${currentNet.toFixed(2)}`;
-
-            // Lógica de "Parabéns" ou "Alerta"
-            if (currentMarginPercent >= 15) {
-                // Situação Boa
-                cardCurrent.className = "comp-card status-good";
-                analysisMsg.innerHTML = "🎉 PARABÉNS! Sua margem está EXCELENTE. Você já lucra mais que a média do mercado.";
-                analysisMsg.style.color = "var(--green)";
-            } else if (currentMarginPercent > 0 && currentMarginPercent < 15) {
-                // Situação Média/Baixa
-                cardCurrent.className = "comp-card status-neutral";
-                analysisMsg.innerHTML = "⚠️ ATENÇÃO: Você tem lucro, mas está abaixo da meta saudável de 15%.";
-                analysisMsg.style.color = "var(--primary)";
+        platformSelect.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                customInput.style.display = 'block';
+                customInput.focus();
             } else {
-                // Prejuízo
-                cardCurrent.className = "comp-card status-bad";
-                analysisMsg.innerHTML = "🚨 URGENTE: Você está perdendo dinheiro a cada venda!";
-                analysisMsg.style.color = "var(--red)";
+                customInput.style.display = 'none';
             }
+        });
 
-            // Exibir Preço Ideal
-            document.getElementById('idealPriceDisplay').innerText = `R$ ${idealPrice.toFixed(2)}`;
-            
-            // Breakdown da Realidade
-            document.getElementById('resCost').innerText = `R$ ${cost.toFixed(2)}`;
-            document.getElementById('resFee').innerText = `- R$ ${currentFeeVal.toFixed(2)}`;
-            document.getElementById('resTax').innerText = `- R$ ${currentTaxVal.toFixed(2)}`;
+        // --- CÁLCULO REVERSO (BALCÃO -> APP) ---
+        function calculateMarketplacePrice() {
+            const balcony = parseFloat(document.getElementById('balconyPrice').value);
+            let fee = 0;
 
-            document.getElementById('pricingResult').style.display = 'block';
-        }
-
-        // --- 2. CALCULADORA DE REPASSE (ENTREGA PRÓPRIA) ---
-        function calculateDeliveryLoss() {
-            const clientFee = parseFloat(document.getElementById('clientDeliveryFee').value);
-            const motoCost = parseFloat(document.getElementById('motoboyCost').value);
-            const appFeePercent = parseFloat(document.getElementById('deliveryPlanFee').value);
-
-            if (isNaN(clientFee) || isNaN(motoCost)) { alert("Preencha os valores."); return; }
-
-            // O iFood cobra taxa sobre o valor COBRADO do cliente
-            const ifoodCut = clientFee * appFeePercent;
-            
-            // Resultado Financeiro da Entrega
-            // (O que o cliente pagou) - (O que o iFood pegou) - (O que você pagou pro motoboy)
-            const result = clientFee - ifoodCut - motoCost;
-
-            document.getElementById('valClient').innerText = clientFee.toFixed(2);
-            document.getElementById('valIfood').innerText = ifoodCut.toFixed(2);
-            document.getElementById('valMoto').innerText = motoCost.toFixed(2);
-            
-            const lossEl = document.getElementById('deliveryLoss');
-            const msgEl = document.getElementById('deliveryMsg');
-
-            if (result < 0) {
-                // Prejuízo
-                lossEl.innerText = `- R$ ${Math.abs(result).toFixed(2)}`;
-                lossEl.style.color = 'var(--red)';
-                msgEl.innerHTML = "Você está tirando <strong>R$ " + Math.abs(result).toFixed(2) + "</strong> do lucro do lanche para pagar a entrega.";
+            if (platformSelect.value === 'custom') {
+                const customVal = parseFloat(customInput.value);
+                if (isNaN(customVal)) { alert("Digite a taxa."); return; }
+                fee = customVal / 100;
             } else {
-                // Lucro ou Empate
-                lossEl.innerText = `R$ ${result.toFixed(2)}`;
-                lossEl.style.color = 'var(--green)';
-                msgEl.innerText = "Parabéns! Sua taxa de entrega cobre os custos.";
+                fee = parseFloat(platformSelect.value);
             }
 
-            document.getElementById('deliveryResult').style.display = 'block';
-        }
+            if (!balcony) { alert("Digite o preço de balcão."); return; }
+            if (fee >= 0.9) { alert("Taxa muito alta."); return; }
 
-        // --- 3. IA GEMINI (ATUALIZADA 1.5-FLASH) ---
-        async function generateDescription() {
-            const dish = document.getElementById('dishInput').value;
-            const tone = document.getElementById('toneInput').value;
-            const outputBox = document.getElementById('ai-output');
-            const resultBox = document.getElementById('aiResult');
-            const loading = document.getElementById('loading');
-            const errorBox = document.getElementById('ai-error');
+            // FÓRMULA MÁGICA: PreçoApp = PreçoBalcão / (1 - Taxa)
+            const appPrice = balcony / (1 - fee);
+            
+            // Prova real
+            const feeAmount = appPrice * fee;
+            const net = appPrice - feeAmount;
 
-            if (!dish) { alert("Digite o prato!"); return; }
+            // Exibir
+            document.getElementById('targetVal').innerText = balcony.toFixed(2);
+            document.getElementById('finalPrice').innerText = `R$ ${appPrice.toFixed(2)}`;
+            
+            document.getElementById('proofSell').innerText = `R$ ${appPrice.toFixed(2)}`;
+            document.getElementById('feePercentDisplay').innerText = `${(fee*100).toFixed(0)}%`;
+            document.getElementById('proofFee').innerText = `- R$ ${feeAmount.toFixed(2)}`;
+            document.getElementById('proofNet').innerText = `R$ ${net.toFixed(2)}`;
 
-            loading.style.display = 'block';
-            resultBox.style.display = 'none';
-            errorBox.style.display = 'none';
-
-            let promptText = `Crie uma descrição persuasiva para iFood (max 250 caracteres) para: ${dish}. `;
-            if (tone === 'vendedor') promptText += "Use gatilhos de fome, palavras sensoriais, foco em venda.";
-            if (tone === 'gourmet') promptText += "Use tom sofisticado, chique, elegante.";
-            if (tone === 'divertido') promptText += "Use tom jovem, engraçado, descontraído.";
-
-            // URL PARA VERSÃO MAIS MODERNA E COMPATÍVEL
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-                });
-
-                const data = await response.json();
-                
-                if (data.error) {
-                    throw new Error(data.error.message || "Erro na API do Google");
-                }
-
-                if (data.candidates && data.candidates.length > 0) {
-                    const text = data.candidates[0].content.parts[0].text;
-                    outputBox.innerText = text;
-                    resultBox.style.display = 'block';
-                } else {
-                    throw new Error("A IA não retornou texto.");
-                }
-
-            } catch (error) {
-                console.error(error);
-                resultBox.style.display = 'block';
-                // Mensagem amigável para o usuário, mas com detalhe técnico
-                errorBox.innerHTML = `<strong>Erro na IA:</strong> ${error.message} <br><br> <em>Nota: Se o erro persistir, pode ser necessário habilitar a API no Google Cloud Console.</em>`;
-                errorBox.style.display = 'block';
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        function copyText() {
-            navigator.clipboard.writeText(document.getElementById('ai-output').innerText);
-            alert("Copiado!");
+            document.getElementById('resultBox').style.display = 'block';
         }
     </script>
 </body>
