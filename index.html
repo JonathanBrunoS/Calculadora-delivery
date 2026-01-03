@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Calculadora de Lucro Delivery & IA de Vendas | Rocket for Eat</title>
-    <meta name="description" content="Descubra se você está perdendo dinheiro no iFood/99Food e gere descrições vendedoras com Inteligência Artificial Grátis. Ferramenta exclusiva Rocket for Eat.">
+    <title>Calculadora de Preço iFood & IA de Vendas | Rocket for Eat</title>
+    <meta name="description" content="Ferramenta gratuita para precificar corretamente no iFood e 99Food. Descubra seu CMV e gere descrições vendedoras com IA.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,12 +42,22 @@
 
         /* --- HEADER --- */
         header { padding: 20px 0; text-align: center; border-bottom: 2px solid #333; background: #1a1a1a; }
-        .logo { width: 120px; display: block; margin: 0 auto 10px auto; }
-        .header-title { font-size: 1.2rem; color: var(--primary); letter-spacing: 1px; }
+        
+        /* CORREÇÃO DA LOGO: Fundo Branco */
+        .logo-container {
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .logo { width: 140px; display: block; }
+        
+        .header-title { font-size: 1.1rem; color: var(--primary); letter-spacing: 1px; font-weight: 700; }
 
         /* --- HERO --- */
         .hero { text-align: center; padding: 40px 20px; }
-        .hero h1 { font-size: 2rem; margin-bottom: 10px; line-height: 1.2; }
+        .hero h1 { font-size: 2rem; margin-bottom: 15px; line-height: 1.2; }
         .hero p { color: var(--text-gray); font-size: 1rem; max-width: 600px; margin: 0 auto; }
 
         /* --- CARDS DAS FERRAMENTAS --- */
@@ -58,6 +68,11 @@
             margin-bottom: 40px; 
             border: 1px solid #333;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        /* Borda amarela no topo */
+        .tool-section::before {
+            content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 3px; background: var(--primary);
         }
 
         .tool-title { 
@@ -65,6 +80,15 @@
             margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #333; 
         }
         .tool-icon { font-size: 1.5rem; }
+
+        /* --- CALCULADORA DE CMV (SUB-FERRAMENTA) --- */
+        .cmv-helper {
+            background: #252525; border: 1px dashed #555; padding: 15px;
+            border-radius: 8px; margin-bottom: 20px; display: none;
+        }
+        .cmv-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .btn-small { padding: 5px 10px; font-size: 0.8rem; background: #444; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        .toggle-cmv { color: var(--primary); cursor: pointer; font-size: 0.85rem; text-decoration: underline; display: block; margin-bottom: 10px; text-align: right; }
 
         /* --- FORMULÁRIOS --- */
         .form-group { margin-bottom: 20px; }
@@ -80,25 +104,18 @@
         .result-box {
             background: rgba(0,0,0,0.3);
             padding: 20px; border-radius: 8px; margin-top: 20px;
-            display: none; /* Escondido até calcular */
+            display: none; border: 1px solid #333;
             animation: fadeIn 0.5s;
         }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .profit-bar-container {
-            height: 25px; background: #444; border-radius: 12px; overflow: hidden; margin: 15px 0; display: flex;
-        }
-        .bar-fees { background: var(--red); height: 100%; transition: width 1s; }
-        .bar-profit { background: var(--green); height: 100%; transition: width 1s; }
-
-        .result-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; }
-        .final-val { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-top: 10px; text-align: center; display: block; }
+        .suggested-price-block { text-align: center; margin-bottom: 20px; }
+        .suggested-label { font-size: 0.9rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+        .suggested-value { font-size: 2.2rem; font-weight: 900; color: var(--primary); display: block; line-height: 1.1; margin-top: 5px; }
         
-        .alert-box {
-            background: rgba(239, 68, 68, 0.15); border-left: 4px solid var(--red);
-            padding: 15px; border-radius: 4px; margin-top: 20px; font-size: 0.9rem; color: #ffcccc;
-        }
+        .breakdown { font-size: 0.9rem; color: #ccc; border-top: 1px solid #444; padding-top: 15px; }
+        .breakdown-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
 
         /* --- BOTÕES --- */
         .btn-calc, .btn-generate {
@@ -107,65 +124,56 @@
             cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
         .btn-calc:hover, .btn-generate:hover { background: #fff; transform: scale(1.02); }
+        .btn-copy { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; float: right; }
 
-        .btn-copy {
-            background: transparent; border: 1px solid var(--primary); color: var(--primary);
-            padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; float: right;
-        }
-
-        /* --- AI GENERATOR --- */
-        #ai-output {
-            white-space: pre-line; margin-top: 15px; font-style: italic; color: #ddd; min-height: 60px;
-        }
-        .loading { text-align: center; color: var(--primary); display: none; margin-top: 10px; }
-
-        /* --- SOBRE A ROCKET (CSS ESPECÍFICO) --- */
-        .about-section { padding: 60px 20px; background-color: #161616; border-top: 1px solid #333; margin-top: 60px; }
-        .about-header { text-align: center; margin-bottom: 40px; }
-        .about-header h2 { font-size: 1.8rem; color: #fff; margin-bottom: 10px; }
-        .about-header span { color: var(--primary); }
-        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .about-card {
-            background: #222; padding: 25px; border-radius: 12px;
-            border-left: 4px solid var(--primary); transition: transform 0.3s ease;
-        }
-        .about-card:hover { transform: translateY(-5px); }
-        .icon-box { font-size: 2rem; margin-bottom: 15px; }
-        .about-card h3 { color: #fff; font-size: 1.2rem; margin-bottom: 10px; font-weight: 700; font-family: 'Montserrat'; }
-        .about-card p { color: #ccc; font-size: 0.95rem; }
+        /* --- SOBRE A ROCKET (ROBUSTO) --- */
+        .about-section { padding: 80px 20px; background-color: #0d0d0d; border-top: 1px solid #333; margin-top: 60px; }
+        .about-intro { text-align: center; max-width: 700px; margin: 0 auto 50px auto; }
+        .about-intro h2 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
+        .about-intro span { color: var(--primary); }
+        .about-intro p { font-size: 1rem; color: #999; line-height: 1.6; margin-bottom: 20px; }
         
+        .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .pillar-card { background: #1a1a1a; padding: 25px; border-radius: 8px; border-bottom: 4px solid #333; transition: 0.3s; }
+        .pillar-card:hover { border-bottom-color: var(--primary); transform: translateY(-5px); }
+        .pillar-icon { font-size: 2rem; margin-bottom: 15px; display: block; }
+        .pillar-card h4 { color: #fff; font-size: 1.1rem; margin-bottom: 10px; }
+        .pillar-card p { color: #888; font-size: 0.9rem; }
+
         .btn-outline {
-            display: block; width: 100%; max-width: 300px; margin: 40px auto 0; padding: 15px;
+            display: block; width: 100%; max-width: 300px; margin: 50px auto 0; padding: 18px;
             text-align: center; border: 2px solid var(--primary); color: var(--primary);
-            text-decoration: none; font-weight: 700; border-radius: 8px; text-transform: uppercase; transition: 0.3s;
+            text-decoration: none; font-weight: 800; border-radius: 8px; text-transform: uppercase; transition: 0.3s;
         }
         .btn-outline:hover { background: var(--primary); color: #000; }
 
         /* --- FOOTER --- */
-        footer { text-align: center; padding: 30px; color: #666; font-size: 0.8rem; background: #000; }
+        footer { text-align: center; padding: 30px; color: #444; font-size: 0.8rem; background: #000; border-top: 1px solid #222; }
         
-        /* Floating Whatsapp */
         .wpp-float {
             position: fixed; bottom: 20px; right: 20px;
-            background: #25D366; width: 55px; height: 55px;
+            background: #25D366; width: 60px; height: 60px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: transform 0.3s;
         }
+        .wpp-float:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
     <header>
         <div class="container">
-            <img src="https://i.postimg.cc/sgvdLPdZ/Design-sem-nome-1.png" alt="Rocket Logo" class="logo">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/sgvdLPdZ/Design-sem-nome-1.png" alt="Rocket Logo" class="logo">
+            </div>
             <div class="header-title">FERRAMENTAS PARA DELIVERY</div>
         </div>
     </header>
 
     <div class="hero">
         <div class="container">
-            <h1>PARE DE <span style="color: var(--primary)">PERDER DINHEIRO</span> NOS APPS</h1>
-            <p>Use nossas ferramentas gratuitas para precificar corretamente e criar descrições que vendem com Inteligência Artificial.</p>
+            <h1>PARE DE <span style="color: var(--primary)">CHUTAR PREÇO</span> NO IFOOD</h1>
+            <p>Precifique com exatidão para ter lucro real e use nossa Inteligência Artificial para criar descrições que vendem sozinhas.</p>
         </div>
     </div>
 
@@ -173,22 +181,53 @@
         
         <div class="tool-section">
             <div class="tool-title">
-                <span class="tool-icon">🧮</span>
-                <h3>Calculadora de Lucro Real</h3>
+                <span class="tool-icon">💰</span>
+                <h3>Calculadora de Preço Ideal (Markup)</h3>
             </div>
             
+            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">
+                Não sabe por quanto vender? Nós calculamos para você cobrir os custos, pagar o app e ainda lucrar.
+            </p>
+
             <div class="form-group">
-                <label class="form-label">Preço de Venda (No App)</label>
-                <input type="number" id="salePrice" class="form-control" placeholder="Ex: 50.00">
+                <label class="form-label">Qual o Custo do Produto? (CMV + Embalagem)</label>
+                <input type="number" id="costPrice" class="form-control" placeholder="R$ 0,00">
+                
+                <span class="toggle-cmv" onclick="toggleCmvHelper()">Não sei meu custo exato (Somar Ingredientes) ▼</span>
+                
+                <div id="cmvHelper" class="cmv-helper">
+                    <h4 style="font-size: 0.9rem; color: #fff; margin-bottom: 10px;">Calculadora Rápida de Ingredientes</h4>
+                    <div id="ingredientsList">
+                        <div class="cmv-row">
+                            <input type="text" class="form-control" placeholder="Item (Ex: Massa)" style="flex: 2;">
+                            <input type="number" class="form-control ing-cost" placeholder="R$ Valor" style="flex: 1;">
+                        </div>
+                        <div class="cmv-row">
+                            <input type="text" class="form-control" placeholder="Item (Ex: Queijo)" style="flex: 2;">
+                            <input type="number" class="form-control ing-cost" placeholder="R$ Valor" style="flex: 1;">
+                        </div>
+                         <div class="cmv-row">
+                            <input type="text" class="form-control" placeholder="Item (Ex: Embalagem)" style="flex: 2;">
+                            <input type="number" class="form-control ing-cost" placeholder="R$ Valor" style="flex: 1;">
+                        </div>
+                    </div>
+                    <button class="btn-small" onclick="addIngredientLine()">+ Adicionar Item</button>
+                    <button class="btn-small" style="background: var(--primary); color: #000; font-weight: bold;" onclick="sumIngredients()">Usar Soma Total</button>
+                </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Custo do Produto (CMV + Embalagem)</label>
-                <input type="number" id="costPrice" class="form-control" placeholder="Ex: 18.00">
+                <label class="form-label">Quanto você quer de Lucro Líquido? (%)</label>
+                <select id="desiredMargin" class="form-select">
+                    <option value="0.10">10% (Mínimo para sobreviver)</option>
+                    <option value="0.15" selected>15% (Saudável)</option>
+                    <option value="0.20">20% (Excelente)</option>
+                    <option value="0.25">25% (Alta Lucratividade)</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Plataforma</label>
+                <label class="form-label">Taxa da Plataforma</label>
                 <select id="platformFee" class="form-select">
                     <option value="0.12">iFood Básico (12%)</option>
                     <option value="0.23">iFood Entrega (23%)</option>
@@ -197,36 +236,32 @@
                     <option value="0.15">Keeta/Outros (15%)</option>
                 </select>
             </div>
+            
+            <div class="form-group">
+                <label class="form-label">Imposto (Simples Nacional - Média 4%)</label>
+                <input type="number" id="taxFee" class="form-control" value="4" disabled style="background: #222; color: #666;">
+            </div>
 
-            <button class="btn-calc" onclick="calculateProfit()">CALCULAR MEU LUCRO</button>
+            <button class="btn-calc" onclick="calculateIdealPrice()">DESCUBRA O PREÇO DE VENDA</button>
 
             <div id="calcResult" class="result-box">
-                <div class="result-row">
-                    <span>Taxa do App:</span>
-                    <span id="feeResult" style="color: var(--red)">R$ 0,00</span>
-                </div>
-                <div class="result-row">
-                    <span>Sobra para você:</span>
-                    <span id="netResult" style="color: var(--green); font-weight: bold;">R$ 0,00</span>
-                </div>
-                
-                <div class="profit-bar-container">
-                    <div id="barFees" class="bar-fees" style="width: 0%"></div>
-                    <div id="barProfit" class="bar-profit" style="width: 0%"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #888;">
-                    <span>App</span>
-                    <span>Seu Bolso</span>
+                <div class="suggested-price-block">
+                    <span class="suggested-label">Para lucrar o que você quer, venda por:</span>
+                    <span id="finalPrice" class="suggested-value">R$ 0,00</span>
                 </div>
 
-                <span class="final-val" id="profitVal">LUCRO: R$ 0,00</span>
-
-                <div id="alertMsg" class="alert-box" style="display: none;">
-                    ⚠️ <strong>Cuidado!</strong> Sua margem está muito baixa. Você está pagando para trabalhar. Precisa ajustar seu cardápio urgente.
+                <div class="breakdown">
+                    <div class="breakdown-row"><span>Custo do Produto (CMV):</span> <span id="resCost">R$ 0,00</span></div>
+                    <div class="breakdown-row"><span>Taxa do App:</span> <span id="resApp" style="color: var(--red)">- R$ 0,00</span></div>
+                    <div class="breakdown-row"><span>Impostos:</span> <span id="resTax" style="color: var(--red)">- R$ 0,00</span></div>
+                    <div class="breakdown-row" style="border-top: 1px solid #555; margin-top: 5px; padding-top: 5px;">
+                        <span style="color: var(--green); font-weight: bold;">Seu Lucro Líquido:</span>
+                        <span id="resProfit" style="color: var(--green); font-weight: bold;">R$ 0,00</span>
+                    </div>
                 </div>
 
-                <a href="https://wa.me/5511959228663?text=Fiz%20as%20contas%20e%20vi%20que%20estou%20perdendo%20dinheiro.%20Preciso%20de%20ajuda." style="display: block; text-align: center; color: var(--primary); margin-top: 15px; font-weight: 700; text-decoration: none;">
-                    QUERO AJUDA PARA PRECIFICAR →
+                <a href="https://wa.me/5511959228663?text=Fiz%20as%20contas%20na%20calculadora%20e%20preciso%20ajustar%20meu%20card%C3%A1pio." style="display: block; text-align: center; color: var(--primary); margin-top: 20px; font-weight: 700; text-decoration: none; border: 1px solid var(--primary); padding: 10px; border-radius: 5px;">
+                    QUERO AJUSTAR MEU CARDÁPIO COM A ROCKET
                 </a>
             </div>
         </div>
@@ -237,7 +272,7 @@
                 <h3>Gerador de Descrição (IA)</h3>
             </div>
             <p style="font-size: 0.9rem; color: #ccc; margin-bottom: 20px;">
-                Não sabe o que escrever? A IA da Rocket cria descrições de neuromarketing para o seu prato em segundos.
+                Cardápio sem descrição não vende. Nossa IA cria textos de neuromarketing para o seu prato em segundos.
             </p>
 
             <div class="form-group">
@@ -255,17 +290,15 @@
             </div>
 
             <button class="btn-generate" onclick="generateDescription()">GERAR DESCRIÇÃO COM IA ✨</button>
-            <div id="loading" class="loading">Pensando na melhor descrição...</div>
+            <div id="loading" class="loading" style="display:none; text-align:center; margin-top:10px; color:var(--primary);">Criando descrição irresistível...</div>
 
             <div id="aiResult" class="result-box" style="display: none;">
                 <button class="btn-copy" onclick="copyText()">Copiar</button>
-                <p id="ai-output"></p>
+                <p id="ai-output" style="white-space: pre-line; margin-top: 10px; color: #ddd; font-style: italic;"></p>
                 
                 <hr style="border: 0; border-top: 1px solid #444; margin: 15px 0;">
                 
-                <a href="https://wa.me/5511959228663?text=Gostei%20da%20IA,%20quero%20saber%20como%20melhorar%20meu%20iFood." style="display: block; text-align: center; color: var(--primary); font-weight: 700; text-decoration: none;">
-                    GOSTOU? IMAGINE SEU CARDÁPIO INTEIRO ASSIM →
-                </a>
+                <p style="font-size: 0.8rem; text-align: center; color: #888;">Essa descrição é sua. Copie e cole no app.</p>
             </div>
         </div>
 
@@ -273,41 +306,42 @@
 
     <section class="about-section">
         <div class="container">
-            <div class="about-header">
+            <div class="about-intro">
                 <h2>QUEM É A <br><span>ROCKET FOR EAT?</span></h2>
-                <p style="color: #999; margin-top: 10px; max-width: 600px; margin: 10px auto;">
-                    Não somos apenas uma calculadora. Somos o braço direito do dono de delivery que cansou de perder dinheiro para os apps.
+                <p>
+                    Muita gente acha que somos uma "agência de marketing". <strong>Nós somos Gestores de Marketplace.</strong>
+                </p>
+                <p>
+                    Enquanto agências focam em postar foto no Instagram, nós focamos em entrar na "casa de máquinas" do seu iFood, 99Food e Rappi para fazer o dinheiro sobrar no final do mês. Entendemos de margem, engenharia de cardápio e algoritmo.
                 </p>
             </div>
-    
-            <div class="about-grid">
-                <div class="about-card">
-                    <div class="icon-box">🧠</div>
-                    <h3>Inteligência de Vendas</h3>
-                    <p>O algoritmo dos apps muda o tempo todo. Nós ajustamos sua loja tecnicamente para você aparecer no topo.</p>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <span class="pillar-icon">📊</span>
+                    <h4>Gestão Técnica</h4>
+                    <p>Configuramos áreas de entrega, horários, travas de segurança e tudo que o algoritmo precisa para te ranquear melhor.</p>
                 </div>
-    
-                <div class="about-card">
-                    <div class="icon-box">📸</div>
-                    <h3>Vitrine que Dá Fome</h3>
-                    <p>Seu cliente compra com os olhos. Transformamos seu cardápio com descrições persuasivas e fotos profissionais.</p>
+                <div class="pillar-card">
+                    <span class="pillar-icon">🍔</span>
+                    <h4>Engenharia de Cardápio</h4>
+                    <p>Não é só colocar preço. Criamos uma estrutura de categorias e complementos que induz o cliente a gastar mais (Ticket Médio).</p>
                 </div>
-    
-                <div class="about-card">
-                    <div class="icon-box">💰</div>
-                    <h3>Lucro no Bolso</h3>
-                    <p>Faturamento é vaidade, lucro é sanidade. Usamos engenharia de cardápio para garantir dinheiro real no caixa.</p>
+                <div class="pillar-card">
+                    <span class="pillar-icon">🚀</span>
+                    <h4>Tráfego & Visibilidade</h4>
+                    <p>Criamos campanhas dentro e fora dos apps para trazer novos clientes todos os dias para a sua base.</p>
                 </div>
             </div>
     
-            <a href="https://wa.me/5511959228663?text=Ol%C3%A1,%20usei%20a%20ferramenta%20e%20quero%20conhecer%20a%20Rocket" class="btn-outline">
-                CONHECER A CONSULTORIA
+            <a href="https://wa.me/5511959228663?text=Ol%C3%A1,%20usei%20a%20calculadora%20e%20quero%20conhecer%20a%20gest%C3%A3o%20da%20Rocket" class="btn-outline">
+                CONHECER A CONSULTORIA COMPLETA
             </a>
         </div>
     </section>
 
     <footer>
-        <p>Rocket for Eat © 2025. Todos os direitos reservados.</p>
+        <p>Rocket for Eat © 2025. CNPJ: 58.508.560/0001-36</p>
     </footer>
 
     <a href="https://wa.me/5511959228663?text=Ol%C3%A1,%20vim%20pelo%20site%20da%20calculadora." class="wpp-float">
@@ -317,60 +351,71 @@
     <script>
         // ==========================================
         // ⚠️ ATENÇÃO: COLOQUE SUA API KEY AQUI !!!
-        // Gere em: https://aistudio.google.com/
         // ==========================================
         const API_KEY = 'COLE_SUA_API_KEY_AQUI'; 
 
-        // --- FUNÇÃO 1: CALCULADORA ---
-        function calculateProfit() {
-            const price = parseFloat(document.getElementById('salePrice').value);
-            const cost = parseFloat(document.getElementById('costPrice').value);
-            const feePercent = parseFloat(document.getElementById('platformFee').value);
+        // --- LÓGICA DE CMV (SOMAR INGREDIENTES) ---
+        function toggleCmvHelper() {
+            const helper = document.getElementById('cmvHelper');
+            helper.style.display = (helper.style.display === 'block') ? 'none' : 'block';
+        }
 
-            if (!price || !cost) {
-                alert("Por favor, preencha o preço de venda e o custo.");
+        function addIngredientLine() {
+            const container = document.getElementById('ingredientsList');
+            const div = document.createElement('div');
+            div.className = 'cmv-row';
+            div.innerHTML = `
+                <input type="text" class="form-control" placeholder="Item" style="flex: 2;">
+                <input type="number" class="form-control ing-cost" placeholder="R$ Valor" style="flex: 1;">
+            `;
+            container.appendChild(div);
+        }
+
+        function sumIngredients() {
+            const inputs = document.querySelectorAll('.ing-cost');
+            let total = 0;
+            inputs.forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+            document.getElementById('costPrice').value = total.toFixed(2);
+            toggleCmvHelper(); // Fecha a janelinha
+        }
+
+        // --- LÓGICA DE PRECIFICAÇÃO (MARKUP) ---
+        function calculateIdealPrice() {
+            const cost = parseFloat(document.getElementById('costPrice').value);
+            const margin = parseFloat(document.getElementById('desiredMargin').value);
+            const appFee = parseFloat(document.getElementById('platformFee').value);
+            const tax = 0.04; // 4% Simples Nacional Fixo para simplificar
+
+            if (!cost) {
+                alert("Por favor, insira o Custo do Produto.");
                 return;
             }
 
-            // Cálculos
-            const feeAmount = price * feePercent;
-            const netAmount = price - feeAmount; // O que sobra do app
-            const profit = netAmount - cost; // Lucro real (Sobra - Custo)
-
-            // Exibir Valores
-            document.getElementById('feeResult').innerText = `- R$ ${feeAmount.toFixed(2)}`;
-            document.getElementById('netResult').innerText = `R$ ${netAmount.toFixed(2)}`;
-            document.getElementById('profitVal').innerText = `LUCRO LÍQUIDO: R$ ${profit.toFixed(2)}`;
-
-            // Cor do Lucro
-            const profitEl = document.getElementById('profitVal');
-            const alertMsg = document.getElementById('alertMsg');
+            // FÓRMULA DE MARKUP: Preço = Custo / (1 - (Taxas + Margem))
+            const totalDeductions = appFee + margin + tax;
             
-            if (profit <= 0) {
-                profitEl.style.color = 'var(--red)';
-                profitEl.innerText = `PREJUÍZO: R$ ${profit.toFixed(2)}`;
-                alertMsg.style.display = 'block';
-                alertMsg.innerHTML = "🚨 <strong>URGENTE:</strong> Você está pagando para vender. Seu preço está errado.";
-            } else {
-                profitEl.style.color = 'var(--green)';
-                alertMsg.style.display = 'none';
-                
-                // Alerta de margem baixa (menos de 10%)
-                if ((profit / price) < 0.10) {
-                    alertMsg.style.display = 'block';
-                    alertMsg.innerHTML = "⚠️ <strong>Cuidado!</strong> Sua margem está muito baixa (menos de 10%). Qualquer erro vira prejuízo.";
-                }
+            // Trava de segurança: se as taxas passarem de 90%, o preço explode
+            if (totalDeductions >= 0.95) {
+                alert("Impossível calcular: As taxas e margem somadas são muito altas.");
+                return;
             }
 
-            // Animar Barras
-            const totalWidth = feeAmount + netAmount; // Representa 100% da venda visualmente (simplificado)
-            const feeWidth = (feeAmount / price) * 100;
-            const profitWidth = 100 - feeWidth;
+            const idealPrice = cost / (1 - totalDeductions);
 
-            document.getElementById('barFees').style.width = `${feeWidth}%`;
-            document.getElementById('barProfit').style.width = `${profitWidth}%`;
+            // Valores monetários
+            const moneyApp = idealPrice * appFee;
+            const moneyTax = idealPrice * tax;
+            const moneyProfit = idealPrice * margin;
 
-            // Mostrar Box
+            // Exibir na tela
+            document.getElementById('finalPrice').innerText = `R$ ${idealPrice.toFixed(2)}`;
+            document.getElementById('resCost').innerText = `R$ ${cost.toFixed(2)}`;
+            document.getElementById('resApp').innerText = `- R$ ${moneyApp.toFixed(2)}`;
+            document.getElementById('resTax').innerText = `- R$ ${moneyTax.toFixed(2)}`;
+            document.getElementById('resProfit').innerText = `R$ ${moneyProfit.toFixed(2)}`;
+
             document.getElementById('calcResult').style.display = 'block';
         }
 
@@ -387,7 +432,7 @@
                 return;
             }
 
-            // Validação simples da API Key
+            // Validação simples
             if (API_KEY === 'COLE_SUA_API_KEY_AQUI' || API_KEY === '') {
                 alert("ERRO: Configure a API Key no código HTML primeiro.");
                 return;
@@ -396,9 +441,7 @@
             loading.style.display = 'block';
             resultBox.style.display = 'none';
 
-            // Configuração do Prompt
             let promptText = `Crie uma descrição curta e persuasiva para iFood (máximo 250 caracteres) para este prato: ${dish}. `;
-            
             if (tone === 'vendedor') promptText += "Use gatilhos mentais de fome, palavras sensoriais (crocante, derretido), estilo vendedor agressivo.";
             if (tone === 'gourmet') promptText += "Use tom sofisticado, elegante, focando na qualidade dos ingredientes.";
             if (tone === 'divertido') promptText += "Use um tom jovem, descontraído e divertido.";
@@ -409,9 +452,7 @@
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: promptText }] }]
-                    })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
                 });
 
                 const data = await response.json();
@@ -426,7 +467,7 @@
 
             } catch (error) {
                 console.error(error);
-                alert("Erro ao conectar com a IA. Verifique a chave API ou a conexão.");
+                alert("Erro ao conectar com a IA.");
             } finally {
                 loading.style.display = 'none';
             }
