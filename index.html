@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Kit de Ferramentas Delivery | Rocket for Eat</title>
-    <meta name="description" content="Calculadoras gratuitas para iFood, Taxa de Motoboy e Gerador de Descrição com IA. Ferramentas exclusivas Rocket for Eat.">
+    <title>Ferramentas Rocket for Eat | Calculadoras e IA para Delivery</title>
+    <meta name="description" content="Pare de perder dinheiro. Calcule precificação correta, prejuízo de entrega e crie descrições com IA. Ferramentas gratuitas para donos de delivery.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +14,9 @@
     <link rel="icon" href="https://i.postimg.cc/sgvdLPdZ/Design-sem-nome-1.png" type="image/png">
 
     <style>
-        /* --- VARIÁVEIS E RESET --- */
+        /* --- VARIÁVEIS --- */
         :root {
-            --primary: #FFC900; /* Amarelo Rocket */
+            --primary: #FFC900;
             --dark: #121212;
             --card-bg: #1E1E1E;
             --input-bg: #2A2A2A;
@@ -36,7 +36,7 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; }
 
         .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
 
@@ -44,84 +44,52 @@
         header { padding: 20px 0; text-align: center; border-bottom: 2px solid #333; background: #1a1a1a; }
         
         .logo-container {
-            background: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 10px;
+            background: #fff; padding: 10px 20px; border-radius: 8px; display: inline-block; margin-bottom: 10px;
         }
         .logo { width: 140px; display: block; }
-        
         .header-title { font-size: 1.1rem; color: var(--primary); letter-spacing: 1px; font-weight: 700; }
 
         /* --- HERO --- */
         .hero { text-align: center; padding: 40px 20px; }
-        .hero h1 { font-size: 2rem; margin-bottom: 15px; line-height: 1.2; }
+        .hero h1 { font-size: 1.8rem; margin-bottom: 15px; line-height: 1.2; }
         .hero p { color: var(--text-gray); font-size: 1rem; max-width: 600px; margin: 0 auto; }
 
-        /* --- CARDS DAS FERRAMENTAS --- */
+        /* --- CARDS --- */
         .tool-section { 
-            background: var(--card-bg); 
-            border-radius: 16px; 
-            padding: 30px; 
-            margin-bottom: 40px; 
-            border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
+            background: var(--card-bg); border-radius: 16px; padding: 30px; margin-bottom: 40px; 
+            border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative;
         }
-        .tool-section::before {
-            content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 3px; background: var(--primary);
-        }
+        .tool-section::before { content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 3px; background: var(--primary); }
 
-        .tool-title { 
-            display: flex; align-items: center; gap: 10px; 
-            margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #333; 
-        }
+        .tool-title { display: flex; align-items: center; gap: 10px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #333; }
         .tool-icon { font-size: 1.5rem; }
 
-        /* --- INPUTS E HELPERS --- */
-        .cmv-helper {
-            background: #252525; border: 1px dashed #555; padding: 15px;
-            border-radius: 8px; margin-bottom: 20px; display: none;
-        }
-        .cmv-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .btn-small { padding: 5px 10px; font-size: 0.8rem; background: #444; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-        .toggle-text { color: var(--primary); cursor: pointer; font-size: 0.85rem; text-decoration: underline; display: block; margin-bottom: 10px; text-align: right; }
-
+        /* --- INPUTS --- */
         .form-group { margin-bottom: 20px; }
         .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #ccc; }
         .form-control, .form-select {
-            width: 100%; padding: 12px; background: var(--input-bg);
-            border: 1px solid #444; border-radius: 8px;
+            width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid #444; border-radius: 8px;
             color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
         }
         .form-control:focus { border-color: var(--primary); }
 
         /* --- RESULTADOS --- */
         .result-box {
-            background: rgba(0,0,0,0.3);
-            padding: 20px; border-radius: 8px; margin-top: 20px;
-            display: none; border: 1px solid #333;
-            animation: fadeIn 0.5s;
+            background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-top: 20px;
+            display: none; border: 1px solid #333; animation: fadeIn 0.5s;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .suggested-price-block { text-align: center; margin-bottom: 20px; }
-        .suggested-label { font-size: 0.9rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
-        .suggested-value { font-size: 2.2rem; font-weight: 900; color: var(--primary); display: block; line-height: 1.1; margin-top: 5px; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; text-align: center; }
+        .comp-card { padding: 15px; border-radius: 8px; background: #252525; }
+        .comp-card.bad { border: 1px solid var(--red); background: rgba(239, 68, 68, 0.1); }
+        .comp-card.good { border: 1px solid var(--green); background: rgba(34, 197, 94, 0.1); }
         
+        .comp-label { display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; color: #aaa; }
+        .comp-value { font-size: 1.4rem; font-weight: 800; display: block; }
+
         .breakdown { font-size: 0.9rem; color: #ccc; border-top: 1px solid #444; padding-top: 15px; }
         .breakdown-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-
-        /* --- ESTILOS ESPECÍFICOS MOTOBOY --- */
-        .km-result-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;
-        }
-        .km-card {
-            background: #222; padding: 10px; border-radius: 6px; text-align: center; border: 1px solid #444;
-        }
-        .km-title { font-size: 0.8rem; color: #aaa; display: block; margin-bottom: 5px; }
-        .km-value { font-size: 1.1rem; color: #fff; font-weight: 700; }
 
         /* --- BOTÕES --- */
         .btn-calc, .btn-generate {
@@ -137,7 +105,6 @@
         .about-intro { text-align: center; max-width: 700px; margin: 0 auto 50px auto; }
         .about-intro h2 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
         .about-intro span { color: var(--primary); }
-        .about-intro p { font-size: 1rem; color: #999; line-height: 1.6; margin-bottom: 20px; }
         
         .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
         .pillar-card { background: #1a1a1a; padding: 25px; border-radius: 8px; border-bottom: 4px solid #333; transition: 0.3s; }
@@ -162,7 +129,6 @@
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: transform 0.3s;
         }
-        .wpp-float:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -179,7 +145,7 @@
     <div class="hero">
         <div class="container">
             <h1>KIT DE FERRAMENTAS <br><span style="color: var(--primary)">ROCKET FOR EAT</span></h1>
-            <p>Precifique seu cardápio, calcule taxas de motoboy e use Inteligência Artificial. Tudo grátis.</p>
+            <p>Descubra onde seu dinheiro está indo pelo ralo e resolva isso agora.</p>
         </div>
     </div>
 
@@ -188,42 +154,21 @@
         <div class="tool-section">
             <div class="tool-title">
                 <span class="tool-icon">💰</span>
-                <h3>Calculadora de Preço Ideal (Markup)</h3>
+                <h3>Calculadora de Preço Real vs. Ideal</h3>
             </div>
             
             <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">
-                Descubra por quanto vender para cobrir taxas do iFood e ter lucro real.
+                Veja se você está lucrando ou pagando para vender no iFood.
             </p>
 
             <div class="form-group">
-                <label class="form-label">Qual o Custo do Produto? (CMV + Embalagem)</label>
-                <input type="number" id="costPrice" class="form-control" placeholder="R$ 0,00">
-                <span class="toggle-text" onclick="toggleCmvHelper()">Não sei meu custo (Somar Ingredientes) ▼</span>
-                
-                <div id="cmvHelper" class="cmv-helper">
-                    <h4 style="font-size: 0.9rem; color: #fff; margin-bottom: 10px;">Somar Ingredientes</h4>
-                    <div id="ingredientsList">
-                        <div class="cmv-row">
-                            <input type="text" class="form-control" placeholder="Item" style="flex: 2;">
-                            <input type="number" class="form-control ing-cost" placeholder="R$ Valor" style="flex: 1;">
-                        </div>
-                        <div class="cmv-row">
-                            <input type="text" class="form-control" placeholder="Item" style="flex: 2;">
-                            <input type="number" class="form-control ing-cost" placeholder="R$ Valor" style="flex: 1;">
-                        </div>
-                    </div>
-                    <button class="btn-small" onclick="addIngredientLine()">+ Item</button>
-                    <button class="btn-small" style="background: var(--primary); color: #000; font-weight: bold;" onclick="sumIngredients()">Usar Soma</button>
-                </div>
+                <label class="form-label">Por quanto você vende hoje? (R$)</label>
+                <input type="number" id="currentPrice" class="form-control" placeholder="Ex: 40.00">
             </div>
 
             <div class="form-group">
-                <label class="form-label">Lucro Líquido Desejado (%)</label>
-                <select id="desiredMargin" class="form-select">
-                    <option value="0.10">10% (Mínimo)</option>
-                    <option value="0.15" selected>15% (Saudável)</option>
-                    <option value="0.20">20% (Ótimo)</option>
-                </select>
+                <label class="form-label">Qual seu Custo Total? (CMV + Embalagem)</label>
+                <input type="number" id="costPrice" class="form-control" placeholder="Ex: 15.00">
             </div>
 
             <div class="form-group">
@@ -235,69 +180,83 @@
                     <option value="0.18">99Food (Média 18%)</option>
                 </select>
             </div>
-            
-             <div class="form-group">
-                <label class="form-label">Imposto (Simples Nacional - 4%)</label>
-                <input type="number" id="taxFee" class="form-control" value="4" disabled style="background: #222; color: #666;">
-            </div>
 
-            <button class="btn-calc" onclick="calculateIdealPrice()">CALCULAR PREÇO DE VENDA</button>
+            <button class="btn-calc" onclick="calculatePricing()">VER A VERDADE SOBRE MEU LUCRO</button>
 
-            <div id="calcResult" class="result-box">
-                <div class="suggested-price-block">
-                    <span class="suggested-label">Sugestão de Preço:</span>
-                    <span id="finalPrice" class="suggested-value">R$ 0,00</span>
+            <div id="pricingResult" class="result-box">
+                <div class="comparison-grid">
+                    <div class="comp-card bad">
+                        <span class="comp-label">Sua Margem Atual</span>
+                        <span id="currentMarginDisplay" class="comp-value" style="color: var(--red)">0%</span>
+                        <small id="currentProfitDisplay" style="color: #ffcccc; display:block; margin-top:5px;">Lucro: R$ 0,00</small>
+                    </div>
+                    <div class="comp-card good">
+                        <span class="comp-label">Preço Sugerido (15% Real)</span>
+                        <span id="idealPriceDisplay" class="comp-value" style="color: var(--green)">R$ 0,00</span>
+                        <small style="color: #ccffcc; display:block; margin-top:5px;">Para lucrar de verdade</small>
+                    </div>
                 </div>
+
                 <div class="breakdown">
-                    <div class="breakdown-row"><span>Custo (CMV):</span> <span id="resCost">R$ 0,00</span></div>
-                    <div class="breakdown-row"><span>Taxa App:</span> <span id="resApp" style="color: var(--red)">- R$ 0,00</span></div>
-                    <div class="breakdown-row"><span>Lucro Líquido:</span> <span id="resProfit" style="color: var(--green); font-weight: bold;">R$ 0,00</span></div>
+                    <p style="text-align: center; margin-bottom: 15px; color: #fff;">
+                        <strong id="lossMessage"></strong>
+                    </p>
+                    <div class="breakdown-row"><span>Custo Prod.:</span> <span id="resCost">R$ 0,00</span></div>
+                    <div class="breakdown-row"><span>Taxa App (No Preço Ideal):</span> <span id="resFee">R$ 0,00</span></div>
+                    <div class="breakdown-row"><span>Imposto (4%):</span> <span id="resTax">R$ 0,00</span></div>
                 </div>
+
+                <a href="https://wa.me/5511959228663?text=Fiz%20o%20c%C3%A1lculo%20e%20vi%20que%20estou%20com%20margem%20errada." style="display: block; text-align: center; color: var(--primary); margin-top: 20px; font-weight: 700; text-decoration: none; border: 1px solid var(--primary); padding: 10px; border-radius: 5px;">
+                    QUERO AJUSTAR MEU CARDÁPIO
+                </a>
             </div>
         </div>
 
         <div class="tool-section">
             <div class="tool-title">
                 <span class="tool-icon">🛵</span>
-                <h3>Calculadora Taxa Motoboy</h3>
+                <h3>Oculto: Taxa de Entrega</h3>
             </div>
             <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">
-                Quanto custa realmente levar o pedido até o cliente? Calcule baseado na sua taxa de saída e KM.
+                Muitos donos "repassam" a taxa, mas esquecem que o iFood cobra comissão sobre ela também. Veja o rombo.
             </p>
 
             <div class="form-group">
-                <label class="form-label">Taxa Fixa de Saída (R$)</label>
-                <input type="number" id="motoBase" class="form-control" placeholder="Ex: 5.00 (Valor mínimo pago ao motoboy)">
+                <label class="form-label">Quanto você COBRA do cliente? (R$)</label>
+                <input type="number" id="clientDeliveryFee" class="form-control" placeholder="Ex: 8.00">
             </div>
             
             <div class="form-group">
-                <label class="form-label">Adicional por KM Rodado (R$)</label>
-                <input type="number" id="motoKm" class="form-control" placeholder="Ex: 1.50">
+                <label class="form-label">Quanto você PAGA ao motoboy? (R$)</label>
+                <input type="number" id="motoboyCost" class="form-control" placeholder="Ex: 8.00">
             </div>
 
-            <button class="btn-calc" onclick="calculateMoto()">CALCULAR CUSTO LOGÍSTICO</button>
+            <div class="form-group">
+                <label class="form-label">Plano iFood</label>
+                <select id="deliveryPlanFee" class="form-select">
+                    <option value="0.23">Entrega Parceira (23%)</option>
+                    <option value="0.27">Entrega Parceira + (27%)</option>
+                </select>
+            </div>
 
-            <div id="motoResult" class="result-box">
-                <h4 style="color: #fff; margin-bottom: 10px; font-size: 1rem;">Custo da Entrega por Distância:</h4>
-                <div class="km-result-grid">
-                    <div class="km-card">
-                        <span class="km-title">Até 3 KM</span>
-                        <span id="res3km" class="km-value">R$ 0,00</span>
-                    </div>
-                    <div class="km-card">
-                        <span class="km-title">Até 5 KM</span>
-                        <span id="res5km" class="km-value">R$ 0,00</span>
-                    </div>
-                    <div class="km-card">
-                        <span class="km-title">Até 7 KM</span>
-                        <span id="res7km" class="km-value">R$ 0,00</span>
-                    </div>
-                    <div class="km-card">
-                        <span class="km-title">Até 10 KM</span>
-                        <span id="res10km" class="km-value">R$ 0,00</span>
-                    </div>
+            <button class="btn-calc" onclick="calculateDeliveryLoss()">CALCULAR PREJUÍZO OCULTO</button>
+
+            <div id="deliveryResult" class="result-box">
+                <div style="text-align: center;">
+                    <span style="color: #aaa; font-size: 0.9rem;">Você recebe líquido da taxa:</span>
+                    <span id="netDeliveryFee" style="font-size: 1.5rem; font-weight: bold; color: #fff; display: block; margin-bottom: 10px;">R$ 0,00</span>
+                    
+                    <hr style="border-color: #444; margin: 15px 0;">
+                    
+                    <span style="color: var(--red); font-size: 1.1rem; font-weight: bold;">
+                        SEU PREJUÍZO POR PEDIDO: <br>
+                        <span id="deliveryLoss" style="font-size: 2rem;">R$ 0,00</span>
+                    </span>
+                    
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #ccc;">
+                        O iFood morde a taxa. Se você cobra R$ 8,00, só recebe cerca de R$ 6,00. Se paga R$ 8,00 pro motoboy, você tira R$ 2,00 do lucro do lanche para pagar a entrega.
+                    </p>
                 </div>
-                <p style="font-size: 0.8rem; color: #888; margin-top: 15px; text-align: center;">*Cálculo: Taxa Fixa + (KM x Adicional)</p>
             </div>
         </div>
 
@@ -325,7 +284,9 @@
             </div>
 
             <button class="btn-generate" onclick="generateDescription()">GERAR DESCRIÇÃO ✨</button>
-            <div id="loading" class="loading" style="display:none; text-align:center; margin-top:10px; color:var(--primary);">A IA está escrevendo...</div>
+            <div id="loading" style="display:none; text-align:center; margin-top:15px; color:var(--primary);">
+                A IA está escrevendo... aguarde.
+            </div>
 
             <div id="aiResult" class="result-box" style="display: none;">
                 <button class="btn-copy" onclick="copyText()">Copiar</button>
@@ -341,30 +302,31 @@
             <div class="about-intro">
                 <h2>QUEM É A <br><span>ROCKET FOR EAT?</span></h2>
                 <p>
-                    Somos Gestores de Marketplace. Entramos na "casa de máquinas" do seu iFood, 99Food e Rappi para fazer o dinheiro sobrar.
+                    Muita gente acha que somos uma "agência de marketing". <strong>Nós somos Gestores de Marketplace.</strong>
                 </p>
+                <p>Enquanto agências focam em postar foto no Instagram, nós focamos em entrar na "casa de máquinas" do seu iFood, 99Food e Rappi para fazer o dinheiro sobrar no final do mês.</p>
             </div>
 
             <div class="pillars-grid">
                 <div class="pillar-card">
                     <span class="pillar-icon">📊</span>
                     <h4>Gestão Técnica</h4>
-                    <p>Configuração avançada de algoritmo, áreas de entrega e travas de segurança.</p>
+                    <p>Configuramos áreas de entrega, horários, travas de segurança e tudo que o algoritmo precisa para te ranquear melhor.</p>
                 </div>
                 <div class="pillar-card">
                     <span class="pillar-icon">🍔</span>
                     <h4>Engenharia de Cardápio</h4>
-                    <p>Estratégia de preços e complementos para aumentar o Ticket Médio.</p>
+                    <p>Não é só colocar preço. Criamos uma estrutura de categorias e complementos que induz o cliente a gastar mais.</p>
                 </div>
                 <div class="pillar-card">
                     <span class="pillar-icon">🚀</span>
-                    <h4>Tráfego Pago</h4>
-                    <p>Campanhas para trazer novos clientes todos os dias.</p>
+                    <h4>Tráfego & Visibilidade</h4>
+                    <p>Criamos campanhas dentro e fora dos apps para trazer novos clientes todos os dias para a sua base.</p>
                 </div>
             </div>
     
             <a href="https://wa.me/5511959228663?text=Ol%C3%A1,%20quero%20conhecer%20a%20gest%C3%A3o%20da%20Rocket" class="btn-outline">
-                CONHECER A CONSULTORIA
+                CONHECER A CONSULTORIA COMPLETA
             </a>
         </div>
     </section>
@@ -379,75 +341,94 @@
 
     <script>
         // ==========================================
-        // ⚠️ API KEY ATUALIZADA - ROCKET FOR EAT
+        // API KEY (ROCKET FOR EAT)
         // ==========================================
         const API_KEY = 'AIzaSyDSTxEtN5ghgF_yqo3ysszgiljeFwqt4dE'; 
 
-        // --- 1. CMV HELPER ---
-        function toggleCmvHelper() {
-            const helper = document.getElementById('cmvHelper');
-            helper.style.display = (helper.style.display === 'block') ? 'none' : 'block';
-        }
-        function addIngredientLine() {
-            const container = document.getElementById('ingredientsList');
-            const div = document.createElement('div');
-            div.className = 'cmv-row';
-            div.innerHTML = `<input type="text" class="form-control" placeholder="Item" style="flex: 2;"><input type="number" class="form-control ing-cost" placeholder="R$ Valor" style="flex: 1;">`;
-            container.appendChild(div);
-        }
-        function sumIngredients() {
-            const inputs = document.querySelectorAll('.ing-cost');
-            let total = 0;
-            inputs.forEach(input => total += parseFloat(input.value) || 0);
-            document.getElementById('costPrice').value = total.toFixed(2);
-            toggleCmvHelper();
-        }
-
-        // --- 2. PRECIFICAÇÃO ---
-        function calculateIdealPrice() {
+        // --- 1. PRECIFICAÇÃO (COMPARATIVO REAL X IDEAL) ---
+        function calculatePricing() {
+            const currentPrice = parseFloat(document.getElementById('currentPrice').value);
             const cost = parseFloat(document.getElementById('costPrice').value);
-            const margin = parseFloat(document.getElementById('desiredMargin').value);
-            const appFee = parseFloat(document.getElementById('platformFee').value);
-            const tax = 0.04; 
+            const feePercent = parseFloat(document.getElementById('platformFee').value);
+            const tax = 0.04; // 4% Fixo Simples
+            const desiredMargin = 0.15; // 15% como alvo padrão
 
-            if (!cost) { alert("Insira o Custo do Produto."); return; }
+            if (!currentPrice || !cost) { alert("Preencha o Preço Atual e o Custo."); return; }
 
-            const totalDeductions = appFee + margin + tax;
-            if (totalDeductions >= 0.95) { alert("Taxas muito altas."); return; }
+            // 1. Calcular Situação Atual
+            const currentFeeVal = currentPrice * feePercent;
+            const currentTaxVal = currentPrice * tax;
+            const currentNet = currentPrice - currentFeeVal - currentTaxVal - cost;
+            const currentMarginPercent = (currentNet / currentPrice) * 100;
 
+            // 2. Calcular Preço Ideal (Markup para 15%)
+            const totalDeductions = feePercent + desiredMargin + tax;
+            if (totalDeductions >= 0.95) { alert("Taxas muito altas, impossível calcular."); return; }
             const idealPrice = cost / (1 - totalDeductions);
-            const moneyApp = idealPrice * appFee;
-            const moneyProfit = idealPrice * margin;
-
-            document.getElementById('finalPrice').innerText = `R$ ${idealPrice.toFixed(2)}`;
-            document.getElementById('resCost').innerText = `R$ ${cost.toFixed(2)}`;
-            document.getElementById('resApp').innerText = `- R$ ${moneyApp.toFixed(2)}`;
-            document.getElementById('resProfit').innerText = `R$ ${moneyProfit.toFixed(2)}`;
-            document.getElementById('calcResult').style.display = 'block';
-        }
-
-        // --- 3. CALCULADORA MOTOBOY ---
-        function calculateMoto() {
-            const base = parseFloat(document.getElementById('motoBase').value);
-            const kmPrice = parseFloat(document.getElementById('motoKm').value);
-
-            if (!base || isNaN(kmPrice)) { alert("Preencha a Taxa Fixa e o Valor por KM."); return; }
-
-            // Cálculos para 3, 5, 7, 10 km
-            const c3 = base + (3 * kmPrice);
-            const c5 = base + (5 * kmPrice);
-            const c7 = base + (7 * kmPrice);
-            const c10 = base + (10 * kmPrice);
-
-            document.getElementById('res3km').innerText = `R$ ${c3.toFixed(2)}`;
-            document.getElementById('res5km').innerText = `R$ ${c5.toFixed(2)}`;
-            document.getElementById('res7km').innerText = `R$ ${c7.toFixed(2)}`;
-            document.getElementById('res10km').innerText = `R$ ${c10.toFixed(2)}`;
             
-            document.getElementById('motoResult').style.display = 'block';
+            // Valores Ideais
+            const idealFee = idealPrice * feePercent;
+            const idealTax = idealPrice * tax;
+
+            // EXIBIÇÃO
+            // Margem Atual
+            const marginEl = document.getElementById('currentMarginDisplay');
+            const profitEl = document.getElementById('currentProfitDisplay');
+            marginEl.innerText = `${currentMarginPercent.toFixed(1)}%`;
+            profitEl.innerText = `Lucro Líquido: R$ ${currentNet.toFixed(2)}`;
+
+            if (currentNet <= 0) {
+                marginEl.style.color = 'var(--red)';
+                document.getElementById('lossMessage').innerHTML = `⚠️ ALERTA: Você perde <span style="color:var(--red)">R$ ${Math.abs(currentNet).toFixed(2)}</span> a cada venda!`;
+            } else if (currentMarginPercent < 10) {
+                marginEl.style.color = 'orange';
+                document.getElementById('lossMessage').innerText = "Cuidado: Margem perigosamente baixa.";
+            } else {
+                marginEl.style.color = 'var(--green)';
+                document.getElementById('lossMessage').innerText = "Sua margem atual está aceitável, mas pode melhorar.";
+            }
+
+            // Preço Ideal
+            document.getElementById('idealPriceDisplay').innerText = `R$ ${idealPrice.toFixed(2)}`;
+            
+            // Breakdown
+            document.getElementById('resCost').innerText = `R$ ${cost.toFixed(2)}`;
+            document.getElementById('resFee').innerText = `- R$ ${idealFee.toFixed(2)}`;
+            document.getElementById('resTax').innerText = `- R$ ${idealTax.toFixed(2)}`;
+
+            document.getElementById('pricingResult').style.display = 'block';
         }
 
-        // --- 4. IA GEMINI (CORRIGIDA) ---
+        // --- 2. CALCULADORA DE ENTREGA (PREJUÍZO OCULTO) ---
+        function calculateDeliveryLoss() {
+            const clientFee = parseFloat(document.getElementById('clientDeliveryFee').value);
+            const motoCost = parseFloat(document.getElementById('motoboyCost').value);
+            const appFeePercent = parseFloat(document.getElementById('deliveryPlanFee').value);
+
+            if (isNaN(clientFee) || isNaN(motoCost)) { alert("Preencha os valores."); return; }
+
+            // O iFood cobra taxa sobre o valor COBRADO do cliente
+            const feeDeduction = clientFee * appFeePercent;
+            const netReceived = clientFee - feeDeduction;
+            
+            // Prejuízo = O que paga pro motoboy - O que sobra líquido
+            const loss = motoCost - netReceived;
+
+            document.getElementById('netDeliveryFee').innerText = `R$ ${netReceived.toFixed(2)}`;
+            
+            const lossEl = document.getElementById('deliveryLoss');
+            if (loss > 0) {
+                lossEl.innerText = `- R$ ${loss.toFixed(2)}`;
+                lossEl.style.color = 'var(--red)';
+            } else {
+                lossEl.innerText = `R$ ${Math.abs(loss).toFixed(2)} (Lucro)`;
+                lossEl.style.color = 'var(--green)';
+            }
+
+            document.getElementById('deliveryResult').style.display = 'block';
+        }
+
+        // --- 3. IA GEMINI (CORREÇÃO DE MODELO) ---
         async function generateDescription() {
             const dish = document.getElementById('dishInput').value;
             const tone = document.getElementById('toneInput').value;
@@ -463,12 +444,12 @@
             errorBox.style.display = 'none';
 
             let promptText = `Crie uma descrição persuasiva para iFood (max 250 caracteres) para: ${dish}. `;
-            if (tone === 'vendedor') promptText += "Use gatilhos de fome e palavras sensoriais.";
-            if (tone === 'gourmet') promptText += "Use tom sofisticado e elegante.";
-            if (tone === 'divertido') promptText += "Use tom jovem e engraçado.";
+            if (tone === 'vendedor') promptText += "Use gatilhos de fome, palavras sensoriais, foco em venda.";
+            if (tone === 'gourmet') promptText += "Use tom sofisticado, chique, elegante.";
+            if (tone === 'divertido') promptText += "Use tom jovem, engraçado, descontraído.";
 
-            // URL Atualizada para versão Flash (Mais rápida/estável)
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+            // URL CORRIGIDA PARA O MODELO PADRÃO (PRO)
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
 
             try {
                 const response = await fetch(url, {
@@ -494,7 +475,7 @@
             } catch (error) {
                 console.error(error);
                 resultBox.style.display = 'block';
-                errorBox.innerText = "Erro: " + error.message + ". Verifique se sua chave API está ativa no Google Cloud.";
+                errorBox.innerText = "Erro: " + error.message;
                 errorBox.style.display = 'block';
             } finally {
                 loading.style.display = 'none';
